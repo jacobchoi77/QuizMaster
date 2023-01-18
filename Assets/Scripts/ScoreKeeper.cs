@@ -1,34 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class ScoreKeeper : MonoBehaviour
-{
-    int correctAnswers = 0;
-    int questionsSeen = 0;
+public class ScoreKeeper : MonoBehaviour{
+    private int _correctAnswers = 0;
+    private int _questionsSeen = 0;
 
-    public int GetCorrectAnswers()
-    {
-        return correctAnswers;
+    public int GetCorrectAnswers(){
+        return _correctAnswers;
     }
 
-    public void IncrementCorrectAnswers()
-    {
-        correctAnswers++;
+    public void IncrementCorrectAnswers(){
+        _correctAnswers++;
     }
 
-    public int GetQuestionSeen()
-    {
-        return questionsSeen;
+    public int GetQuestionSeen(){
+        return _questionsSeen;
     }
 
-    public void IncrementQuestionsSeen()
-    {
-        questionsSeen++;
+    public void IncrementQuestionsSeen(){
+        _questionsSeen++;
     }
 
-    public int CalculateScore()
-    {
-        return Mathf.RoundToInt(correctAnswers / (float)questionsSeen * 100);
+    public int CalculateScore(){
+        return Mathf.RoundToInt(_correctAnswers / (float)_questionsSeen * 100);
     }
 }

@@ -3,35 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
-{
-    Quiz quiz;
-    EndScreen endScreen;
+public class GameManager : MonoBehaviour{
+    private Quiz _quiz;
+    private EndScreen _endScreen;
 
-    void Awake()
-    {
-        quiz = FindObjectOfType<Quiz>();
-        endScreen = FindObjectOfType<EndScreen>();
+    private void Awake(){
+        _quiz = FindObjectOfType<Quiz>();
+        _endScreen = FindObjectOfType<EndScreen>();
     }
 
-    void Start()
-    {
-        quiz.gameObject.SetActive(true);
-        endScreen.gameObject.SetActive(false);
+    private void Start(){
+        _quiz.gameObject.SetActive(true);
+        _endScreen.gameObject.SetActive(false);
     }
 
-    void Update()
-    {
-        if (quiz.isComplete)
-        {
-            quiz.gameObject.SetActive(false);
-            endScreen.gameObject.SetActive(true);
-            endScreen.ShowFinalScore();
-        }
+    private void Update(){
+        if (!_quiz.isComplete) return;
+        _quiz.gameObject.SetActive(false);
+        _endScreen.gameObject.SetActive(true);
+        _endScreen.ShowFinalScore();
     }
 
-    public void OnReplayLevel()
-    {
+    public void OnReplayLevel(){
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

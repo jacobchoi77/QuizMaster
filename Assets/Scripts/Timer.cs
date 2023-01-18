@@ -1,54 +1,42 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Timer : MonoBehaviour
-{
-    [SerializeField] float timeToCompleteQuestion = 30f;
-    [SerializeField] float timeToShowCorrectAnswer = 10f;
+public class Timer : MonoBehaviour{
+    [SerializeField] private float timeToCompleteQuestion = 30f;
+    [SerializeField] private float timeToShowCorrectAnswer = 10f;
 
     public bool loadNextQuestion;
     public float fillFraction;
     public bool isAnsweringQuestion;
-    
-    float timerValue;
 
-    void Update()
-    {
+    private float _timerValue;
+
+    private void Update(){
         UpdateTimer();
     }
 
-    public void CancelTimer()
-    {
-        timerValue = 0;
+    public void CancelTimer(){
+        _timerValue = 0;
     }
 
-    void UpdateTimer()
-    {
-        timerValue -= Time.deltaTime;
+    private void UpdateTimer(){
+        _timerValue -= Time.deltaTime;
 
-        if(isAnsweringQuestion)
-        {
-            if(timerValue > 0)
-            {
-                fillFraction = timerValue / timeToCompleteQuestion;
+        if (isAnsweringQuestion){
+            if (_timerValue > 0){
+                fillFraction = _timerValue / timeToCompleteQuestion;
             }
-            else
-            {
+            else{
                 isAnsweringQuestion = false;
-                timerValue = timeToShowCorrectAnswer;
+                _timerValue = timeToShowCorrectAnswer;
             }
         }
-        else
-        {
-            if(timerValue > 0)
-            {
-                fillFraction = timerValue / timeToShowCorrectAnswer;
+        else{
+            if (_timerValue > 0){
+                fillFraction = _timerValue / timeToShowCorrectAnswer;
             }
-            else
-            {
+            else{
                 isAnsweringQuestion = true;
-                timerValue = timeToCompleteQuestion;
+                _timerValue = timeToCompleteQuestion;
                 loadNextQuestion = true;
             }
         }
