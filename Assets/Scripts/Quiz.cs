@@ -6,32 +6,44 @@ using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class Quiz : MonoBehaviour{
-    [Header("Questions")] [SerializeField] private TextMeshProUGUI questionText;
-    [SerializeField] private List<QuestionSo> questions = new List<QuestionSo>();
-    private QuestionSo _currentQuestion;
+    [Header("Questions")]
+    [SerializeField]
+    private TextMeshProUGUI questionText;
 
-    [Header("Answers")] [SerializeField] private GameObject[] answerButtons;
+    [SerializeField]
+    private List<QuestionSo> questions = new();
 
-    private int _correctAnswerIndex;
-    private bool _hasAnsweredEarly = true;
+    [Header("Answers")]
+    [SerializeField]
+    private GameObject[] answerButtons;
 
-    [Header("Button Colors")] [SerializeField]
+    [Header("Button Colors")]
+    [SerializeField]
     private Sprite defaultAnswerSprite;
 
-    [SerializeField] private Sprite correctAnswerSprite;
+    [SerializeField]
+    private Sprite correctAnswerSprite;
 
-    [Header("Timer")] [SerializeField] private Image timerImage;
+    [Header("Timer")]
+    [SerializeField]
+    private Image timerImage;
 
-    private Timer _timer;
+    [Header("Scoring")]
+    [SerializeField]
+    private TextMeshProUGUI scoreText;
 
-    [Header("Scoring")] [SerializeField] private TextMeshProUGUI scoreText;
-
-    private ScoreKeeper _scoreKeeper;
-
-    [Header("ProgressBar")] [SerializeField]
+    [Header("ProgressBar")]
+    [SerializeField]
     private Slider progressBar;
 
-    public bool isComplete;
+    [NonSerialized]
+    public bool IsComplete;
+
+    private QuestionSo _currentQuestion;
+    private int _correctAnswerIndex;
+    private bool _hasAnsweredEarly = true;
+    private Timer _timer;
+    private ScoreKeeper _scoreKeeper;
 
     private void Awake(){
         _timer = FindObjectOfType<Timer>();
@@ -41,18 +53,18 @@ public class Quiz : MonoBehaviour{
     }
 
     private void Update(){
-        timerImage.fillAmount = _timer.fillFraction;
-        if (_timer.loadNextQuestion){
+        timerImage.fillAmount = _timer.FillFraction;
+        if (_timer.LoadNextQuestion){
             if (Math.Abs(progressBar.value - progressBar.maxValue) < 0.001f){
-                isComplete = true;
+                IsComplete = true;
                 return;
             }
 
             _hasAnsweredEarly = false;
             GetNextQuestion();
-            _timer.loadNextQuestion = false;
+            _timer.LoadNextQuestion = false;
         }
-        else if (!_hasAnsweredEarly && !_timer.isAnsweringQuestion){
+        else if (!_hasAnsweredEarly && !_timer.IsAnsweringQuestion){
             DisplayAnswer(-1);
             SetButtonState(false);
         }
@@ -105,7 +117,7 @@ public class Quiz : MonoBehaviour{
     private void DisplayQuestion(){
         questionText.text = _currentQuestion.GetQuestion();
 
-        for (int i = 0; i < answerButtons.Length; i++){
+        for (var i = 0; i < answerButtons.Length; i++){
             var buttonText = answerButtons[i].GetComponentInChildren<TextMeshProUGUI>();
             buttonText.text = _currentQuestion.GetAnswer(i);
         }

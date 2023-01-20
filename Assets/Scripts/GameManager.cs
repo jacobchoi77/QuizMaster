@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour{
     }
 
     private void Update(){
-        if (!_quiz.isComplete) return;
+        if (!_quiz.IsComplete) return;
         _quiz.gameObject.SetActive(false);
         _endScreen.gameObject.SetActive(true);
         _endScreen.ShowFinalScore();

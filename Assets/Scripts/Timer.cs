@@ -1,12 +1,21 @@
+using System;
 using UnityEngine;
 
 public class Timer : MonoBehaviour{
-    [SerializeField] private float timeToCompleteQuestion = 30f;
-    [SerializeField] private float timeToShowCorrectAnswer = 10f;
+    [SerializeField]
+    private float timeToCompleteQuestion = 30f;
 
-    public bool loadNextQuestion;
-    public float fillFraction;
-    public bool isAnsweringQuestion;
+    [SerializeField]
+    private float timeToShowCorrectAnswer = 10f;
+
+    [NonSerialized]
+    public bool LoadNextQuestion;
+
+    [NonSerialized]
+    public float FillFraction;
+
+    [NonSerialized]
+    public bool IsAnsweringQuestion;
 
     private float _timerValue;
 
@@ -21,23 +30,23 @@ public class Timer : MonoBehaviour{
     private void UpdateTimer(){
         _timerValue -= Time.deltaTime;
 
-        if (isAnsweringQuestion){
+        if (IsAnsweringQuestion){
             if (_timerValue > 0){
-                fillFraction = _timerValue / timeToCompleteQuestion;
+                FillFraction = _timerValue / timeToCompleteQuestion;
             }
             else{
-                isAnsweringQuestion = false;
+                IsAnsweringQuestion = false;
                 _timerValue = timeToShowCorrectAnswer;
             }
         }
         else{
             if (_timerValue > 0){
-                fillFraction = _timerValue / timeToShowCorrectAnswer;
+                FillFraction = _timerValue / timeToShowCorrectAnswer;
             }
             else{
-                isAnsweringQuestion = true;
+                IsAnsweringQuestion = true;
                 _timerValue = timeToCompleteQuestion;
-                loadNextQuestion = true;
+                LoadNextQuestion = true;
             }
         }
     }
